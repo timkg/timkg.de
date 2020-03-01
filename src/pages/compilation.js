@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "gatsby";
 
 export default class CompilationPage extends Component {
 
@@ -11,6 +12,7 @@ export default class CompilationPage extends Component {
                         <li><a href="#evolution">Evolution of JS</a></li>
                         <li><a href="#deploying">Deploying into the Unknown</a></li>
                         <li><a href="#compilers">Compilers</a></li>
+                        <li><Link to="/">&larr; Back</Link></li>
                     </ul>
                 </nav>
                 <section id="compilation">
