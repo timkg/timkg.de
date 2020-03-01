@@ -48,6 +48,11 @@ nav a {
     color: #999;
 }
 
+.back {
+    text-decoration: none;
+    color: #999;
+}
+
 @media (max-width: 700px) {
     nav {
         display: none;
@@ -58,7 +63,9 @@ nav a {
     }
 }
 
-.back {
-    text-decoration: none;
-    color: #999;
+@media (min-width: 701px) {
+    .back {
+        display: none;
+    }
 }
+
