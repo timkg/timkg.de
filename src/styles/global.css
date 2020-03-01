@@ -24,11 +24,13 @@ article {
     top: 200px;
     text-align: right;
     font-size: 14px;
-    width: 200px;
+    width: 150px;
 }
 
 .article-toc ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .article-toc li {
