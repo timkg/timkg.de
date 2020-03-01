@@ -1,102 +1,18 @@
 import React, { Component } from "react"
 
-class Nav extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            hidden: true,
-            left: 0
-        };
-
-        this.positionNextToArticle = this.positionNextToArticle.bind(this);
-    }
-
-    componentDidMount() {
-        this.positionNextToArticle();
-        // TODO debounce to run every 50ms or so, not on every event
-        window.addEventListener("resize", this.positionNextToArticle);
-        this.setState({
-            hidden: false
-        });
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.positionNextToArticle);
-    }
-
-    positionNextToArticle() {
-        // TODO pass in reference to element in constructor
-        const { positionRelativeTo } = this.props;
-        const articleLeft = document.querySelector(`#${positionRelativeTo}`).getBoundingClientRect().left;
-        this.setState({
-            left: articleLeft - 250 // TODO get rid of magic number
-        })
-    }
-
-    render() {
-        return (
-            <nav className="article-toc"
-                style={{
-                    display: this.state.hidden ? "none" : "block",
-                    left: `${this.state.left}px`
-                }}>
-                <ul>
-                    <li><a href="#compilation-intro">JS Compilation?</a></li>
-                    <li><a href="#evolution">Evolution of JS</a></li>
-                    <li><a href="#deploying">Deploying into the Unknown</a></li>
-                    <li><a href="#compilers">Compilers</a></li>
-                </ul>
-            </nav>
-        );
-    }
-}
-
 export default class CompilationPage extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            shouldTocBeVisible: false
-        };
-
-        this.showTocIfScreenIsBigEnough = this.showTocIfScreenIsBigEnough.bind(this);
-    }
-
-    componentDidMount() {
-        this.showTocIfScreenIsBigEnough();
-        // TODO debounce to run every 50ms or so, not on every event
-        window.addEventListener("resize", this.showTocIfScreenIsBigEnough);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.showTocIfScreenIsBigEnough);
-    }
-
-
-    showTocIfScreenIsBigEnough() {
-        const windowWidth = window.innerWidth;
-        // TODO get rid of magic numbers
-        const articleWidth = 600;
-        const tocWidth = 150;
-        const tocGutter = 100;
-
-        let shouldTocBeVisible;
-        if ((windowWidth - articleWidth) / 2 < tocWidth + tocGutter) {
-            shouldTocBeVisible = false;
-        } else {
-            shouldTocBeVisible = true;
-        }
-
-        this.setState({shouldTocBeVisible})
-    }
 
     render() {
         return (
             <article>
-                { this.state.shouldTocBeVisible && <Nav positionRelativeTo="compilation"/> }
+                <nav>
+                    <ul>
+                        <li><a href="#compilation-intro">JS Compilation?</a></li>
+                        <li><a href="#evolution">Evolution of JS</a></li>
+                        <li><a href="#deploying">Deploying into the Unknown</a></li>
+                        <li><a href="#compilers">Compilers</a></li>
+                    </ul>
+                </nav>
                 <section id="compilation">
                     <h1 id="compilation-intro">Compilation? Isn't this JavaScript?</h1>
                     <p>
