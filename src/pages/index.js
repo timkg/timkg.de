@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "gatsby";
 
 export default class IndexPage extends Component {
 
@@ -16,10 +17,21 @@ export default class IndexPage extends Component {
                 <p>
                     Recently I wanted to try out Gatsby.js, a supposedly "static site generator". Well,
                     it generates static sites. But I was flabbergasted by all of the stuff which 
-                    kind of happens automatically. Don't get me wrong. Using tools which automate repetitive task is 
-                    a good thing. However, things become less black and white when we start using 
+                    kind of happens automatically. Don't get me wrong. Using tools which automate repetitive tasks is 
+                    a good thing. However, things become less simple when we start using 
                     tools which automate stuff we don't really understand. So I decided to start breaking down
                     what Gatsby actually does, and explore these concepts separately, one at a time.
+                </p>
+                <p>
+                    I'll have a look at the following Gatsby features:
+                    <ul>
+                        <Link to="/compilation"><li>Compilation</li></Link>
+                        <li>Module Bundling</li>
+                        <li>Live-reloading dev server</li>
+                        <li>React</li>
+                        <li>Static site generation</li>
+                        <li>Client-side routing</li>
+                    </ul>
                 </p>
             </article>
         );
