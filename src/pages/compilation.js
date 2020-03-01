@@ -7,11 +7,8 @@ export default class CompilationPage extends Component {
             <article>
                 <h1>Compilation? Isn't this JavaScript?</h1>
                 <p>
-                    JavaScript was designed to be embedded in HTML pages. A web developer writes
-                    JS and embeds it directly in the HTML via script tags. It is 
-                    the responsibility of the browser vendors to implement a JS interpreter, which
-                    loads and executes the JS code embedded in a page.
-                    So why do we as web developers have to care about JS compilation, suddenly?
+                    JavaScript was designed to be embedded in HTML pages.
+                    So why do we have to care about JS compilation?
                 </p>
                 <h2>The evolution of JavaScript and its implications</h2>
                 <p>
@@ -40,17 +37,20 @@ export default class CompilationPage extends Component {
                     or the web app it enables, and executed on a device with unknown form factor and unknown JavaScript engine. 
                 </p>
                 <p>
-                    Traditionally, the approach to solve the difficulties arising from this deployment into the unknown was to rely on a DOM library such as jQuery. 
-                    Back in the early 2000's, the biggest problem JavaScript programmers were facing was different implementations of the DOM API - 
+                    Traditionally, the approach to solve the difficulties arising from this deployment into the unknown 
+                    was to rely on a DOM library such as jQuery. Back in the early 2000's, the biggest problem 
+                    JavaScript programmers were facing was different implementations of the DOM API - 
                     the functions which a browser provides to allow manipulation of the content of a web page. 
-                    jQuery abstracted away these differences and provided a convenient way to manipulate the content of a page without
-                    caring about different DOM implementations. So why don't we just rely on jQuery anymore?
+                    jQuery abstracted away these differences and provided a convenient way to manipulate 
+                    the content of a page without caring about different DOM implementations. 
+                    So why does "frontend bad, use jQuery" not cut it anymore?
                 </p>
                 <p>
                     The evolution of the JavaScript language through the work of TC39 has made a big leap in 2015, 
-                    with the release of ES2015 (then still called ES6, but the year-based naming convention has been introduced since then). 
-                    This release introduced a whole array of syntax changes to JavaScript. The problem with syntax changes, 
-                    as opposed to API changes, is that a JavaScript engine cannot parse and execute a file with unknown syntax. 
+                    with the release of ES2015 (then still called ES6, but the year-based naming convention 
+                    has been introduced since then). This release introduced a whole array of 
+                    syntax changes to JavaScript. The problem with syntax changes, as opposed to API changes,
+                    is that a JavaScript engine cannot parse and execute a file with unknown syntax. 
                     A call to an unknown API method can be mitigated by declaring the missing method manually, 
                     or checking for the existence of alternative methods. Changed syntax however breaks the program. 
                 </p>
@@ -58,13 +58,12 @@ export default class CompilationPage extends Component {
                 <h2>Compilers</h2>
                 <p>
                     ES2015 introduced a lot of new syntax to JavaScript. New syntax can't be worked around like API inconsistencies. 
-                    This led to the introduction of compilers to the frontend build process. A compiler is a piece of software 
-                    which takes code as input and produces another representation of the code as output, while keeping 
-                    the intended functionality. It can be understood as a translator, making sure that the programmer's 
-                    intent and the functionality of the code can be understood by other people and machines.
+                    This led to the introduction of compilers to the frontend build process. Developers can use new syntax and 
+                    language features, compile their code down to a better supported older version, and release this version
+                    to their users.
                 </p>
                 <p>
-                    Babel.js is a compiler for modern JavaScript. It takes JavaScript as input and produces JavaScript as output, 
+                    Babel.js is such a compiler for modern JavaScript. It takes JavaScript as input and produces JavaScript as output, 
                     transforming it during the process so that the resulting code can be executed by older browsers. 
                     In this chapter, we'll get acquinted with babel.js and explore some of the transformations it performs to make modern 
                     JavaScript executable on older JS engines.
