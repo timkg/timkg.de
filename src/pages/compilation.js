@@ -9,6 +9,7 @@ class Nav extends Component {
             hidden: true,
             left: 0
         };
+
         this.positionNextToArticle = this.positionNextToArticle.bind(this);
     }
 
@@ -30,7 +31,7 @@ class Nav extends Component {
         const { positionRelativeTo } = this.props;
         const articleLeft = document.querySelector(`#${positionRelativeTo}`).getBoundingClientRect().left;
         this.setState({
-            left: articleLeft - 300
+            left: articleLeft - 250 // TODO get rid of magic number
         })
     }
 
@@ -54,10 +55,48 @@ class Nav extends Component {
 
 export default class CompilationPage extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            shouldTocBeVisible: false
+        };
+
+        this.showTocIfScreenIsBigEnough = this.showTocIfScreenIsBigEnough.bind(this);
+    }
+
+    componentDidMount() {
+        this.showTocIfScreenIsBigEnough();
+        // TODO debounce to run every 50ms or so, not on every event
+        window.addEventListener("resize", this.showTocIfScreenIsBigEnough);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.showTocIfScreenIsBigEnough);
+    }
+
+
+    showTocIfScreenIsBigEnough() {
+        const windowWidth = window.innerWidth;
+        // TODO get rid of magic numbers
+        const articleWidth = 600;
+        const tocWidth = 150;
+        const tocGutter = 100;
+
+        let shouldTocBeVisible;
+        if ((windowWidth - articleWidth) / 2 < tocWidth + tocGutter) {
+            shouldTocBeVisible = false;
+        } else {
+            shouldTocBeVisible = true;
+        }
+
+        this.setState({shouldTocBeVisible})
+    }
+
     render() {
         return (
             <article>
-                <Nav positionRelativeTo="compilation"/>
+                { this.state.shouldTocBeVisible && <Nav positionRelativeTo="compilation"/> }
                 <section id="compilation">
                     <h1 id="compilation-intro">Compilation? Isn't this JavaScript?</h1>
                     <p>
