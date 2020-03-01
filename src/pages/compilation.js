@@ -81,6 +81,7 @@ export default class CompilationPage extends Component {
                     </p>
                 </section>
                 
+                <Link to="/" className="back">&larr; Back</Link>
 
             </article>
         );
