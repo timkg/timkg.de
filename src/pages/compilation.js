@@ -47,8 +47,8 @@ export default class CompilationPage extends Component {
                 </p>
                 <p>
                     The evolution of the JavaScript language through the work of TC39 has made a big leap in 2015, 
-                    with the release of ES2015 (then still called ES6, but the year-based naming convention 
-                    has been introduced since then). This release introduced a whole array of 
+                    with the standardization of ES2015 (then still called ES6, but the year-based naming convention 
+                    has been introduced since then). This version introduced a whole array of 
                     syntax changes to JavaScript. The problem with syntax changes, as opposed to API changes,
                     is that a JavaScript engine cannot parse and execute a file with unknown syntax. 
                     A call to an unknown API method can be mitigated by declaring the missing method manually, 
