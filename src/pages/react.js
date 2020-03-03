@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "gatsby";
 import Nav from "../nav";
 
 class ContrivedExample extends React.Component {
@@ -110,6 +111,8 @@ ReactDOM.render(contrivedExample, document.body)
                 <p>
                     This concludes our first look at React. Next we'll have a look at React's infamous JSX templating library.
                 </p>
+
+                <Link to="/" className="back">&larr; Back</Link>
 
             </article>
         );
