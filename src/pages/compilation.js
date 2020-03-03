@@ -1,20 +1,18 @@
 import React, { Component } from "react"
 import { Link } from "gatsby";
+import Nav from "../nav";
 
 export default class CompilationPage extends Component {
 
     render() {
         return (
             <article>
-                <nav>
-                    <ul>
-                        <li><a href="#compilation-intro">JS Compilation?</a></li>
-                        <li><a href="#evolution">Evolution of JS</a></li>
-                        <li><a href="#deploying">Deploying into the Unknown</a></li>
-                        <li><a href="#compilers">Compilers</a></li>
-                        <li><Link to="/">&larr; Back</Link></li>
-                    </ul>
-                </nav>
+                <Nav links={[
+                    ["#compilation-intro", "JS Compilation?"],
+                    ["#evolution", "Evolution of JS"],
+                    ["#deploying", "Deploying into the Unknown"],
+                    ["#compilers", "Compilers"]
+                ]}></Nav>
                 <section id="compilation">
                     <h1 id="compilation-intro">Compilation? Isn't this JavaScript?</h1>
                     <p>
