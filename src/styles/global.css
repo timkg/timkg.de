@@ -75,10 +75,6 @@ nav a {
     line-height: 1.5em;
 }
 
-em {
-    padding-right: 0.5em;
-}
-
 .react-example {
     font-size: 12px;
     font-family: "Sans Source Pro";
@@ -94,6 +90,11 @@ pre + p,
 
 ol li {
     margin: 1em;
+}
+
+ul li {
+    margin: 1em;
+    margin-inline-start: 0;
 }
 
 pre {
