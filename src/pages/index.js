@@ -25,10 +25,10 @@ export default class IndexPage extends Component {
                 <p>
                     I'll have a look at the following Gatsby features:
                     <ul>
-                        <Link to="/compilation"><li>Compilation</li></Link>
+                        <li><Link to="/compilation/">Compilation</Link></li>
                         <li>Module Bundling</li>
                         <li>Live-reloading dev server</li>
-                        <li>React</li>
+                        <li><Link to="/react/">React</Link></li>
                         <li>Static site generation</li>
                         <li>Client-side routing</li>
                     </ul>
