@@ -1,5 +1,6 @@
 body {
     padding-top: 40px;
+    color: #333;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -69,3 +70,32 @@ nav a {
     }
 }
 
+.code {
+    font-size: 12px;
+    line-height: 1.5em;
+}
+
+em {
+    padding-right: 0.5em;
+}
+
+.react-example {
+    font-size: 12px;
+    font-family: "Sans Source Pro";
+    margin-left: 50px;
+    padding-left: 20px;
+    border-left: 3px solid #666;
+}
+
+pre + p,
+.react-example + p {
+    margin-top: 2em;
+}
+
+ol li {
+    margin: 1em;
+}
+
+pre {
+    overflow: scroll;
+}
