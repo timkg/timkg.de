@@ -26,17 +26,18 @@ export default class ReactPage extends Component {
             <article>
                 <Nav links={[
                     ["#components", "Components and Elements"],
-                    ["#jsx", "JSX"]
+                    ["#jsx", "JSX"],
+                    ["#props", "Props and Children"]
                 ]}></Nav>
                 
+                <h1>React</h1>
+                <p>
+                    React is a library for building User Interfaces. You can think of a React application as a function
+                    which receives data as input and produces your UI as output. Things like data fetching, advanced state management,
+                    routing, etc. are outside of the scope of React itself.
+                </p>
+                
                 <section>
-                    <h1>React</h1>
-                    <p>
-                        React is a library for building User Interfaces. You can think of a React application as a function
-                        which receives data as input and produces your UI as output. Things like data fetching, advanced state management,
-                        routing, etc. are outside of the scope of React itself.
-                    </p>
-
                     <h2 id="components">Components and Elements</h2>
 
                     <p>
@@ -258,6 +259,47 @@ class P extends React.Component { /* */ }
 
                 </section>
 
+                <section>
+                    <h2 id="props">Props and Children</h2>
+
+                    <p>
+                        There are two ways to pass data into a Component: props and children. Props (short for properties) 
+                        are plain JavaScript values of whatever nature (primitives, objects, functions) which you can pass 
+                        to a component using the attribute notation in JSX. The name of the attribute will be the key on 
+                        the props object under which the respective value can be found.
+                    </p>
+
+                    <p>
+                        You can pass content to a Component by simply including text or JSX "tags" inside your component's "tags". 
+                        This content is available inside of your component under props.children, and you can render it by 
+                        simply referencing it as an expression in your component's render method.
+                    </p>
+
+                    <p>
+                        During my time with React, I've seen a gross overuse of props to configure the desired behaviour of 
+                        components, when using children would have been much cleaner and simpler. Let's assume you have 
+                        a sidebar with some navigation links. If the user is logged in, an additional <strong>Log Out</strong>&nbsp; 
+                        link should be shown, and a <strong>Log In</strong> otherwise.
+                    </p>
+
+                    <p>
+                        An approach to solve this could be to add a boolean <code>isLoggedIn</code> via props, 
+                        and add a condition in the render method to decide which link to add to the list. 
+                        Now the sidebar becomes aware of user state. Well, that's what we wanted, right? 
+                        But what if we want to reuse the sidebar in other contexts, where we do not want this behaviour? 
+                        Then it would make sense to add another prop, <code>shouldRenderLogInLogoutLinks</code>, right?
+                        First we check if the additional link should be rendered, and then we check which of the two 
+                        we should render. This quickly becomes a prop nightmare.
+                    </p>
+
+                    <p>
+                        This desire to make thinks reusable via 
+                        props can lead to a very serious and unmaintainable prop creep. A much cleaner solution is to make 
+                        the sidebar render any additional children it receives at the end of the navigation list.
+                        Depending on the context where we use the sidebar, we either pass in a Log In link, or a 
+                        Log Out link, or nothing at all. 
+                    </p>
+                </section>
 
                 <Link to="/" className="back">&larr; Back</Link>
 
