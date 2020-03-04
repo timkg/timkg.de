@@ -20,6 +20,10 @@ article {
     margin-left: 25%;
 }
 
+section {
+    margin-top: 4em;
+}
+
 nav {
     position: fixed;
     left: 0;
