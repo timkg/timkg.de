@@ -17,7 +17,8 @@ export default class ReactPage extends Component {
     componentDidMount() {
         document.querySelectorAll('pre code').forEach((block) => {
             window.hljs.highlightBlock(block);
-          });
+        });
+
     }
 
     render() {
@@ -203,6 +204,14 @@ class P extends React.Component { /* */ }
     It will have a children property, and its value will be a string.
 </p>
 
+// will compile to...
+{
+    'type': 'p',
+    'props': {
+      'children': 'This example will...'
+    }
+}
+
 <CustomComponent>
     <p>
         This example will be compiled to three React Elements. 
@@ -213,6 +222,27 @@ class P extends React.Component { /* */ }
         with an array of two React Elements of type "p".
     </p>
 </CustomComponent>
+
+// will compile to...
+{
+    'type': CustomComponent,
+    'props': {
+      'children': [
+        {
+          'type': 'p',
+          'props': {
+            'children': 'This example will...'
+          }
+        },
+        {
+          'type': 'p',
+          'props': {
+            'children': 'The CustomComponent...'
+          }
+        }
+      ]
+    },
+}
                             `}
                             </code>
                             </pre>
