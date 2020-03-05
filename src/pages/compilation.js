@@ -1,12 +1,12 @@
 import React, { Component } from "react"
-import { Link } from "gatsby";
+import Article from "../components/article";
 import Nav from "../nav";
 
 export default class CompilationPage extends Component {
 
     render() {
         return (
-            <article>
+            <Article>
                 <Nav links={[
                     ["#compilation-intro", "JS Compilation?"],
                     ["#evolution", "Evolution of JS"],
@@ -21,28 +21,27 @@ export default class CompilationPage extends Component {
                     </p>
                     <h2 id="evolution">The evolution of JavaScript and its implications</h2>
                     <p>
-                        JavaScript is a continually evolving language. TC39 is the steering committee 
-                        which proposes new syntax and other constructs. These proposals go through 
-                        various stages of refinement, potentially ending in stage 4 - accepted. 
+                        JavaScript is a continuously evolving language. 
+                        &nbsp;<a href="https://www.ecma-international.org/memento/tc39-rf-tg.htm">TC39</a>&nbsp;
+                        is the steering committee which proposes new syntax and other constructs. 
+                        These proposals go through various stages of refinement, potentially ending in stage 4 - accepted. 
                         The set of proposals which reached stage 4 during a given calendar year is 
-                        later standardized as a new version of JavaScript, named after the given calendar year.
+                        later standardized by
+                        &nbsp;<a href="https://www.ecma-international.org/ecma-262/10.0/index.html#Title">ECMA</a>&nbsp;
+                        as a new version of JavaScript, named after the given calendar year (ES2015, ES2016, etc).
                     </p>
+
                     <p>
-                        The body responsible for the specification (not the proposal management process, that's TC39) 
-                        is ECMA, the European Computer Manufacturers Association. That's why the official name of JavaScript 
-                        is actually ECMAScript, ES for short. The official specifications of JavaScript are named ES2015, ES2016, etc.
+                        So our programming language of choice is constantly evolving. That's great. But still,
+                        a few years ago nobody needed to compile their JavaScript. Why do we need to do that now?
                     </p>
-                    <p>
-                        Why do we, as programmers using the JavaScript language, care about the processes and organisations 
-                        which drive the evolution of the language? We need to care because there is a mismatch between the 
-                        development of the language on one side and the devices on which our code gets executed on the other side.
-                    </p>
+
 
                     <h2 id="deploying">Deploying into the unknown</h2>
                     <p>
-                        The frontend code we write is not executed on machines under our control. While we might write code on a machine running 
-                        a modern JavaScript engine which understands all of the modern syntax and implements all of the modern APIs, 
-                        this code is not written for us, but for our users. It is delivered together with the website it enriches, 
+                        The frontend code we write is not executed on machines under our control. We might write code on a machine running 
+                        a modern JavaScript engine which understands all of the modern syntax and implements all of the modern APIs. 
+                        But this code is not written to be executed on our machine. It is delivered together with the website it enriches, 
                         or the web app it enables, and executed on a device with unknown form factor and unknown JavaScript engine. 
                     </p>
                     <p>
@@ -66,10 +65,9 @@ export default class CompilationPage extends Component {
 
                     <h2 id="compilers">Compilers</h2>
                     <p>
-                        ES2015 introduced a lot of new syntax to JavaScript. New syntax can't be worked around like API inconsistencies. 
-                        This led to the introduction of compilers to the frontend build process. Developers can use new syntax and 
-                        language features, compile their code down to a better supported older version, and release this version
-                        to their users.
+                        ES2015's syntax changes led to the introduction of compilers to the frontend build process. Using a compiler,
+                        Developers can use new syntax and language features, compile their code down to a better supported older version, 
+                        and release this version to their users.
                     </p>
                     <p>
                         Babel.js is such a compiler for modern JavaScript. It takes JavaScript as input and produces JavaScript as output, 
@@ -78,10 +76,8 @@ export default class CompilationPage extends Component {
                         JavaScript executable on older JS engines.
                     </p>
                 </section>
-                
-                <Link to="/" className="back">&larr; Back</Link>
-
-            </article>
+            
+            </Article>
         );
     }
 
