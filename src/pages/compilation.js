@@ -1,12 +1,12 @@
 import React, { Component } from "react"
-import { Link } from "gatsby";
+import Article from "../components/article";
 import Nav from "../nav";
 
 export default class CompilationPage extends Component {
 
     render() {
         return (
-            <article>
+            <Article>
                 <Nav links={[
                     ["#compilation-intro", "JS Compilation?"],
                     ["#evolution", "Evolution of JS"],
@@ -78,10 +78,8 @@ export default class CompilationPage extends Component {
                         JavaScript executable on older JS engines.
                     </p>
                 </section>
-                
-                <Link to="/" className="back">&larr; Back</Link>
-
-            </article>
+            
+            </Article>
         );
     }
 
