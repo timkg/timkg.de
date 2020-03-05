@@ -74,7 +74,7 @@ nav a {
     }
 }
 
-.code {
+pre code {
     font-size: 12px;
     line-height: 1.5em;
 }
