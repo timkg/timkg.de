@@ -18,7 +18,6 @@ export default class ReactPage extends Component {
         document.querySelectorAll('pre code').forEach((block) => {
             window.hljs.highlightBlock(block);
         });
-
     }
 
     render() {
@@ -267,12 +266,47 @@ class P extends React.Component { /* */ }
                         are plain JavaScript values of whatever nature (primitives, objects, functions) which you can pass 
                         to a component using the attribute notation in JSX. The name of the attribute will be the key on 
                         the props object under which the respective value can be found.
+
+                        <pre><code>
+                        {`
+class Header extends React.Component {
+    render() {
+        const message = this.props.message;
+
+        <h1>My message is {message}!</h1>
+
+    }
+}
+
+<Header message="very important" />
+                            `}
+                        </code></pre>
                     </p>
 
                     <p>
-                        You can pass content to a Component by simply including text or JSX "tags" inside your component's "tags". 
-                        This content is available inside of your component under props.children, and you can render it by 
+                        Props are a generic way to pass whatever JS construct you need to a component. 
+                        Another way to configure a Component is using Children. This is used to pass additional <strong>things to render</strong> to
+                         a component.
+                        This additional content is available inside of your component under props.children, and you can render it by 
                         simply referencing it as an expression in your component's render method.
+
+                        <pre><code>
+                        {`
+class MyComponent extends React.Component {
+    render() {
+        <p>
+            <h1>This is my component</h1>
+            // ...
+            {this.props.children}
+        </p>
+    }
+}
+
+<MyComponent>
+    <p>It renders its children via this.props.children</p>
+</MyComponent>
+                            `}
+                        </code></pre>
                     </p>
 
                     <p>
@@ -289,7 +323,28 @@ class P extends React.Component { /* */ }
                         But what if we want to reuse the sidebar in other contexts, where we do not want this behaviour? 
                         Then it would make sense to add another prop, <code>shouldRenderLogInLogoutLinks</code>, right?
                         First we check if the additional link should be rendered, and then we check which of the two 
-                        we should render. This quickly becomes a prop nightmare.
+                        we should render.
+
+                        <pre><code>
+                        {`
+<Sidebar shouldRenderLogInLogoutLinks={true} isLoggedIn={false} />
+
+// ...
+
+class Sidebar extends React.Component {
+    render() {
+        const { shouldRenderLogInLogoutLinks, isLoggedIn } = this.props;
+
+        return (
+            // ...
+            shouldRenderLogInLogoutLinks && isLoggedIn && <LogOut />
+            shouldRenderLogInLogoutLinks && !isLoggedIn && <LogIn />
+            // ...
+        );
+    }
+}
+                            `}
+                        </code></pre>
                     </p>
 
                     <p>
@@ -297,7 +352,27 @@ class P extends React.Component { /* */ }
                         props can lead to a very serious and unmaintainable prop creep. A much cleaner solution is to make 
                         the sidebar render any additional children it receives at the end of the navigation list.
                         Depending on the context where we use the sidebar, we either pass in a Log In link, or a 
-                        Log Out link, or nothing at all. 
+                        Log Out link, or nothing at all.
+
+
+                        <pre><code>
+                        {`
+<Sidebar>
+    <LogIn />
+</Sidebar>
+
+// ...
+
+class Sidebar extends React.Component {
+    render() {
+        return (
+            // ...
+            {this.props.children}
+        );
+    }
+}
+                            `}
+                        </code></pre>
                     </p>
                 </section>
 
