@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "gatsby";
+import Article from "../components/article";
 import Nav from "../nav";
 
 class ContrivedExample extends React.Component {
@@ -23,7 +23,7 @@ export default class ReactPage extends Component {
 
     render() {
         return (
-            <article>
+            <Article>
                 <Nav links={[
                     ["#components", "Components and Elements"],
                     ["#jsx", "JSX"],
@@ -301,9 +301,7 @@ class P extends React.Component { /* */ }
                     </p>
                 </section>
 
-                <Link to="/" className="back">&larr; Back</Link>
-
-            </article>
+            </Article>
         );
     }
 
