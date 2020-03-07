@@ -4,6 +4,13 @@ import Nav from "../nav";
 
 export default class CompilationPage extends Component {
 
+    componentDidMount() {
+        document.querySelectorAll('pre code').forEach((block) => {
+            window.hljs.highlightBlock(block);
+        });
+
+    }
+
     render() {
         return (
             <Article>
@@ -11,7 +18,7 @@ export default class CompilationPage extends Component {
                     ["#compilation-intro", "JS Compilation?"],
                     ["#evolution", "Evolution of JS"],
                     ["#deploying", "Deploying into the Unknown"],
-                    ["#compilers", "Compilers"]
+                    ["#babel", "Babel.js"]
                 ]}></Nav>
                 <section id="compilation">
                     <h1 id="compilation-intro">Compilation? Isn't this JavaScript?</h1>
@@ -63,20 +70,155 @@ export default class CompilationPage extends Component {
                         or checking for the existence of alternative methods. Changed syntax however breaks the program. 
                     </p>
 
-                    <h2 id="compilers">Compilers</h2>
+                </section>
+
+                <section>
+                    <h2 id="babel">Babel.js</h2>
+
                     <p>
                         ES2015's syntax changes led to the introduction of compilers to the frontend build process. Using a compiler,
                         Developers can use new syntax and language features, compile their code down to a better supported older version, 
                         and release this version to their users.
                     </p>
+
                     <p>
-                        Babel.js is such a compiler for modern JavaScript. It takes JavaScript as input and produces JavaScript as output, 
-                        transforming it during the process so that the resulting code can be executed by older browsers. 
-                        In this chapter, we'll get acquinted with babel.js and explore some of the transformations it performs to make modern 
-                        JavaScript executable on older JS engines.
+                        Gatsby includes <a href="https://babeljs.io/">babel.js</a>, which is such a compiler for modern JavaScript. It takes JavaScript as input and produces JavaScript as output, 
+                        transforming it during the process so that the resulting code can be executed by older browsers.
                     </p>
+
+                    <p>
+                        Babel.js works in three phases:
+                    </p>
+
+                    <ol>
+                        <li>
+                            parse JS source code into an Abstract Syntax Tree (AST)
+                        </li>
+                        <li>
+                            perform transformations on the parsed AST
+                        </li>
+                        <li>
+                            output target source code from the transformed AST
+                        </li>
+                    </ol>
+
+                    <p>
+                        These three functionalities are implemented via three different npm modules:
+                    </p>
+
+                    <ol>
+                        <li>
+                            <a href="https://babeljs.io/docs/en/next/babel-parser.html">@babel/parser</a> to parse JS source code into an AST
+                        </li>
+                        <li>
+                            <a href="https://babeljs.io/docs/en/next/babel-traverse.html">@babel/traverse</a> to walk the AST and perform transformations on it
+                        </li>
+                        <li>
+                            <a href="https://babeljs.io/docs/en/next/babel-generator.html">@babel/generator</a> to output the transformed AST as target code.
+                        </li>
+                    </ol>
+
+                    <p>
+                        All of these three modules are included in the <code>@babel/core</code> package. We just need to include <code>@babel/core</code>.
+                        The relevant transformations are implemented individually as <a href="https://babeljs.io/docs/en/next/plugins">plugins</a>.
+                    </p>
+
+                </section>
+
+                <section>
+
+                    <h2>Parsing</h2>
+
+                    <p>
+                        The parser takes in source code and produces an Abstract Syntax Tree representation of it. Let's take an ES2015 arrow function expression
+                        as an example.
+                    </p>
+
+                    <pre><code>
+                        {`
+var babel = require("@babel/core");
+var arrowFnCode = "const square = (x) => x * 2";
+var ast = babel.parse(arrowFnCode);
+
+// this will parse the following JSON tree:
+
+{
+    "type": "VariableDeclaration",
+    "kind": "const",
+    "declarations": [
+        {
+            "id": {
+                "identifierName": "square"
+            },
+            "name": "square"
+        },
+        {
+            "type": "ArrowFunctionExpression",
+            "params": [
+                {
+                    "type": "Identifier",
+                    "name": "x"
+                }
+            ],
+            "body": {
+                "type": "BinaryExpression",
+                "left": {
+                    "type": "Identifier",
+                    "name": "x"
+                },
+                "operator": "*",
+                "right": {
+                    "type": "NumericLiteral",
+                    "value": 2
+                }
+            }
+        }
+    ]
+}
+                        `}
+                    </code></pre>
+
+                </section>
+
+                <section>
+                    <h2>Transformation</h2>
+
+                    <p>
+                        After parsing the source code into an AST, babel will 
+                        traverse the tree and perform transformations on it. In order to instruct babel.js 
+                        to transform a certain piece of code, we need to load the relevant <a href="https://babeljs.io/docs/en/next/plugins">plugin</a>.
+                    </p>
+
+                    <p>
+                        For example, we can instruct babel to transform ES2015 arrow functions into standard JS functions:
+                    </p>
+
+                    <pre><code>
+                        {`
+var babel = require("@babel/core");
+var arrowFnCode = "const square = (x) => x * 2";
+
+var res = babel.transform(arrowFnCode, {
+  plugins: ["@babel/plugin-transform-arrow-functions"]
+});
+
+// res.code will be:
+const square = function (x) {
+    return x * 2;
+};
+                        `}
+                    </code></pre>
+
+                    <p>
+                        Since specifying every single transformation indvidually would be pretty cumbersome,
+                        babel.js introduced the concept of <a href="https://babeljs.io/docs/en/next/presets">presets</a>, which 
+                        include a series of relevant plugins.
+                    </p>
+
                 </section>
             
+
+
             </Article>
         );
     }
