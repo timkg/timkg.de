@@ -1,31 +1,60 @@
 import React, { Component } from "react";
 
 var DataSource = {
+    
+    blogPosts: {
+        listeners: [],
+        data: {}
+    },
 
-    comments: [],
+    getBlogPost(id) {
 
-    listeners: [],
+        if (!this.blogPosts.data[id]) {
+            this.blogPosts.data[id] = {
+                title: null,
+                body: null
+            }
+
+            setTimeout(() => {
+                this.blogPosts.data[id] = {
+                    title: `Blog Post #${id}`,
+                    body: `Lorem? Ipsum!`
+                }
+                this.blogPosts.listeners.forEach(listener => {
+                    listener();
+                })
+            }, 1000);
+
+        }
+
+        return this.blogPosts.data[id];
+    },
+
+    comments: {
+        listeners: [],
+        data: []
+    },
     
     getComments() {
 
-        if (this.comments.length < 4) {
+        if (this.comments.data.length < 4) {
             setTimeout(() => {
-                this.comments.push(`Comment number ${this.comments.length + 1}`);
-                this.listeners.forEach(listener => {
-                    listener(this.comments);
+                this.comments.data.push(`Comment number ${this.comments.data.length + 1}`);
+                this.comments.listeners.forEach(listener => {
+                    listener(this.comments.data);
                 })
             }, 1000);
         }
 
-        return this.comments;
+        return this.comments.data;
     },
 
-    addChangeListener(fn) {
-        this.listeners.push(fn);
+    addChangeListener(fn, topic = "comments") {
+        this[topic].listeners.push(fn);
     },
 
-    removeChangeListener(fn) {
-        this.listeners = this.listeners.filter(listener => listener !== fn)
+    removeChangeListener(fn, topic = "comments") {
+        this[topic].listeners = this[topic].listeners.filter(listener => listener !== fn)
     },
 }
 
@@ -62,9 +91,48 @@ export default class CommentList extends Component {
     render() {
         return (
             <div>
+                <BlogPost id="1" />
                 {this.state.comments.map((comment) => (
                     <Comment key={comment.replace(" ", "-")} comment={comment} />
                 ))}
+            </div>
+        );
+    }
+
+}
+
+class BlogPost extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.handleChange = this.handleChange.bind(this);
+
+        this.state = {
+            blogPost: DataSource.getBlogPost(props.id)
+        }
+
+    }
+
+    componentDidMount() {
+        DataSource.addChangeListener(this.handleChange, "blogPosts");
+    }
+
+    componentWillUnmount() {
+        DataSource.removeChangeListener(this.handleChange, "blogPosts");
+    }
+
+    handleChange() {
+        this.setState({
+            blogPost: DataSource.getBlogPost(this.props.id)
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <h2>{this.state.blogPost.title ? this.state.blogPost.title : "loading..."}</h2>
+                <p>{this.state.blogPost.body}</p>
             </div>
         );
     }
