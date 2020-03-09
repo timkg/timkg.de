@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 
 var DataSource = {
+
+    listeners: [],
     
     blogPosts: {
-        listeners: [],
         data: {}
     },
 
@@ -20,41 +21,43 @@ var DataSource = {
                     title: `Blog Post #${id}`,
                     body: `Lorem? Ipsum!`
                 }
-                this.blogPosts.listeners.forEach(listener => {
+
+                this.listeners.forEach(listener => {
                     listener();
                 })
-            }, 1000);
+            }, 750);
 
         }
 
         return this.blogPosts.data[id];
     },
 
-    comments: {
-        listeners: [],
-        data: []
-    },
+    comments: null,
     
     getComments() {
 
-        if (this.comments.data.length < 4) {
+        if (!this.comments) {
+            this.comments = { data: [] }
+
             setTimeout(() => {
-                this.comments.data.push(`Comment number ${this.comments.data.length + 1}`);
-                this.comments.listeners.forEach(listener => {
-                    listener(this.comments.data);
+                this.comments.data.push(`Comment number 1`);
+                this.comments.data.push(`Comment number 2`);
+
+                this.listeners.forEach(listener => {
+                    listener();
                 })
-            }, 1000);
+            }, 1500);
         }
 
         return this.comments.data;
     },
 
-    addChangeListener(fn, topic = "comments") {
-        this[topic].listeners.push(fn);
+    addChangeListener(fn) {
+        this.listeners.push(fn);
     },
 
-    removeChangeListener(fn, topic = "comments") {
-        this[topic].listeners = this[topic].listeners.filter(listener => listener !== fn)
+    removeChangeListener(fn) {
+        this.listeners = this.listeners.filter(listener => listener !== fn)
     },
 }
 
@@ -62,7 +65,7 @@ const Comment = (props) => {
     return <p>{props.comment}</p>;
 }
 
-export default class CommentList extends Component {
+class RepetitiveCommentList extends Component {
 
     constructor(props) {
         super(props);
@@ -91,7 +94,6 @@ export default class CommentList extends Component {
     render() {
         return (
             <div>
-                <BlogPost id="1" />
                 {this.state.comments.map((comment) => (
                     <Comment key={comment.replace(" ", "-")} comment={comment} />
                 ))}
@@ -101,7 +103,7 @@ export default class CommentList extends Component {
 
 }
 
-class BlogPost extends Component {
+class RepetitiveBlogPost extends Component {
 
     constructor(props) {
         super(props);
@@ -115,11 +117,11 @@ class BlogPost extends Component {
     }
 
     componentDidMount() {
-        DataSource.addChangeListener(this.handleChange, "blogPosts");
+        DataSource.addChangeListener(this.handleChange);
     }
 
     componentWillUnmount() {
-        DataSource.removeChangeListener(this.handleChange, "blogPosts");
+        DataSource.removeChangeListener(this.handleChange);
     }
 
     handleChange() {
@@ -137,4 +139,102 @@ class BlogPost extends Component {
         );
     }
 
+}
+
+function withSubscription(WrappedComponent, selectData) {
+
+    return class extends Component {
+
+        constructor(props) {
+            super(props);
+
+            this.handleChange = this.handleChange.bind(this);
+
+            this.state = {
+                data: selectData(DataSource, props)
+            }
+        }
+
+        componentDidMount() {
+            DataSource.addChangeListener(this.handleChange);
+          }
+      
+          componentWillUnmount() {
+            DataSource.removeChangeListener(this.handleChange);
+          }
+      
+          handleChange() {
+            this.setState({
+              data: selectData(DataSource, this.props)
+            });
+          }
+      
+          render() {
+            return <WrappedComponent data={this.state.data} {...this.props} />;
+          }
+
+    }
+
+}
+
+class CommentList extends Component {
+
+    render() {
+        const comments = this.props.data;
+
+        return (
+            <div>
+                {comments.map((comment) => (
+                    <Comment key={comment.replace(" ", "-")} comment={comment} />
+                ))}
+            </div>
+        );
+    }
+
+}
+
+class BlogPost extends Component {
+
+    render() {
+        const { title, body } = this.props.data;
+
+        return (
+            <div>
+                <h2>{title ? title : "loading..."}</h2>
+                <p>{body}</p>
+            </div>
+        );
+    }
+
+}
+
+const WrappedCommentList = withSubscription(
+    CommentList,
+    (DataSource) => {
+        return DataSource.getComments();
+    }
+)
+
+const WrappedBlogPost = withSubscription(
+    BlogPost,
+    (DataSource, props) => {
+        return DataSource.getBlogPost(props.id);
+    }
+)
+
+
+
+export default class HoCPage extends Component {
+    render() {
+        return (
+            <div>
+                <h2>Repetition</h2>
+                <RepetitiveCommentList />
+                <RepetitiveBlogPost id="1" />
+                <h2>Wrapped</h2>
+                <WrappedCommentList />
+                <WrappedBlogPost id="2" />
+            </div>
+        );
+    }
 }
